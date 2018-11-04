@@ -1,0 +1,111 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" > Author: Litao Shen
+" > Modified Date: 2018-09-04
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" > General settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" set encoding to be utf8
+set encoding=utf8
+
+" enable syntax highlighting
+syntax enable
+syntax on
+
+" set how many lines of history VIM has to remember
+set history=1000
+
+" set auto read when file changed outside
+set autoread
+
+" set auto save file
+set autowrite
+
+" use spaces instead of tabs
+set expandtab
+
+" be smart when use tabs
+set smarttab
+
+" set 1 tab = 4 spaces
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+" set 10 lines from cursor to bottom
+set so=10
+
+" turn on wild menu
+set wildmenu
+
+" set height of command bar
+set cmdheight=2
+
+" set block cursor
+set ruler
+
+" set tenths of a second to blink when matching brackets
+set mat=2
+
+" show matched cursor
+set showmatch
+
+" set textwidth 
+set textwidth=80
+
+" show color line for textwidth over 80
+if exists('+colorcolumn')
+    set colorcolumn=80
+else
+    au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
+
+" turn off sound on errors
+set noerrorbells
+set novisualbell
+
+" enable mouse when possible
+if(has('mouse'))
+    set mouse=a
+endif
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" > Search settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" ignore case while searching
+set ignorecase
+
+" be smart about case while searching
+set smartcase
+
+" highlight search results
+set hlsearch
+
+" incremental search
+set incsearch
+
+" for regular expression, turn on magic
+set magic
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" > helper functions
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Function to remove fancy chars
+function! RemoveFancyCharacters()     
+    let typo = {}     
+    let typo["“"] = '"'     
+    let typo["”"] = '"'     
+    let typo["‘"] = "'"     
+    let typo["’"] = "'"     
+    let typo["–"] = '--'     
+    let typo["—"] = '---'     
+    let typo["…"] = '...'     
+    :exe ":%s/".join(keys(typo), '\|').'/\=typo[submatch(0)]/ge' 
+endfunction 
+" Execute remove fancy chars function above
+command! RemoveFancyCharacters :call RemoveFancyCharacters()
